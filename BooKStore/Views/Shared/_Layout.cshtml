@@ -1,0 +1,81 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Book Store</title>
+    <link rel="stylesheet" href="/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <style>
+        a{
+            font-family:Verdana, Geneva, Tahoma, sans-serif
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" href="#"> Book Store</a>
+        <ul class="navbar-nav mr-auto">
+           
+            <li class="nav-item">
+                <a class="nav-link" asp-area="" asp-controller="Book" asp-action="Books">Book</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" asp-area="" asp-controller="Dashboard" asp-action="Display">Dashboard</a>
+            </li>
+            @if (User.IsInRole("admin"))
+            {
+                <li class="nav-item">
+                    <a class="nav-link" asp-area="" asp-controller="Genre" asp-action="GetAll">Genre</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" asp-area="" asp-controller="Author" asp-action="GetAll">Author</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" asp-area="" asp-controller="Publisher" asp-action="GetAll">Publisher</a>
+                </li>
+            }
+            @if (!string.IsNullOrEmpty(User.Identity.Name))
+            {
+                <li class="nav-item">
+                    <a class="nav-link" asp-area="" asp-controller="UserAuthentication" asp-action="ChangePassword">Change Password</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" asp-area="" asp-controller="UserAuthentication" asp-action="Logout">Logout</a>
+                </li>
+            }
+            <li class="nav-item">
+                <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            </li>
+        </ul>
+
+    </nav>
+    <div class="container">
+        <main role="main" class="pb-3">
+            <div class="row">
+                @* <div class="col-3">
+                    <vc:categories />
+
+                    <div class="bg-success mt-3 p-3 text-white">
+                        <vc:small-cart />
+                    </div>
+                </div> *@ 
+                <div class="col">
+                    <partial name="_PartialView" />
+                    @RenderBody()
+                </div>
+            </div>
+        </main>
+    </div>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>
+@*
+<footer class="border-top footer text-muted">
+    <div class="container">
+        &copy; 2023 - Book Store - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+    </div>
+</footer>*@
